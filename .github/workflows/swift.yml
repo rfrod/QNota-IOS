@@ -19,13 +19,13 @@ jobs:
       run: /usr/bin/xcodebuild -version
     - name: Build archive
       run: |
-       xcodebuild -sdk iphoneos -project CocoaHeadsNL/CocoaHeadsNL.xcodeproj \
-          -configuration Release -scheme CocoaHeadsNL \
+       xcodebuild -sdk iphoneos -project QNota.xcodeproj \
+          -configuration Release -scheme QNota \
           -derivedDataPath DerivedData \
-         -archivePath DerivedData/Archive/CocoaHeadsNL archive
+         -archivePath DerivedData/Archive/QNota archive
     - name: Export Archive
       run: |
         xcodebuild -exportArchive \
-          -archivePath DerivedData/Archive/CocoaHeadsNL.xcarchive \
+          -archivePath DerivedData/Archive/QNota.xcarchive \
           -exportOptionsPlist provisioning/App-Store.plist \
-          -exportPath DerivedData/ipa
+          -exportPath QNota/ipa
