@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
-    name: Test
+  build:
+    name: Build
     runs-on: macOS-latest
     strategy:
       matrix:
@@ -16,9 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Testing
+      - name: Building
         run: |
-          xcodebuild clean test -project QNota.xcodeproj -scheme QNota -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+          xcodebuild clean build -project QNota.xcodeproj -scheme QNota -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
           bash <(curl -s https://codecov.io/bash) -t "${CODECOV_TOKEN}"
         env: 
            destination: ${{ matrix.destination }}
