@@ -31,7 +31,7 @@ jobs:
         run: |
           xcrun simctl list
           xcodebuild clean build -project QNota.xcodeproj -scheme QNota \
-          -destination "${destination}" \ 
+          -destination "${destination}" \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO \
           ONLY_ACTIVE_ARCH=NO
