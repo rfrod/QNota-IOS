@@ -1,6 +1,6 @@
 # QNota-IOS
 
-Front-end of Android APP to help visually impaired people to use the cellphone camera to detect a money bill value.
+Front-end of IOS APP to help visually impaired people to use the cellphone camera to detect a money bill value.
 <table><tr>
 <td><img src="doc/IMG_8141.PNG" height="360" width="169"></td>
 <td><img src="doc/IMG_8142.PNG" height="360" width="169"></td>
@@ -9,7 +9,7 @@ Front-end of Android APP to help visually impaired people to use the cellphone c
 </tr></table>
 
 ## Instructions
-- Download and install [not yet available](#).
+- Download and installation is [not available yet](#).
 
 ## What does this do?
 - Allows to phtograph a bill.
@@ -17,12 +17,11 @@ Front-end of Android APP to help visually impaired people to use the cellphone c
 - Returns the value of the bill to the user.
 
 ## Updates & Fixes
-For a listing of new features & fixes please check out the [releases](https://github.com/chrislennon/Crypto-Touchbar-App/releases) page.
+For a listing of new features & fixes please check out the [releases](https://github.com/rfrod/QNota-IOS/releases) page.
 All features & bugs should also have a record in the issues page.
 
 ## Acknowledgements
 
-Implementation was made significantly easier by [CNN](https://folivora.ai).
 The CNN implementantion is available at [QNota-CNN](https://github.com/rfrod/QNota-CNN).
 
 ## Local Development & Contribution
