@@ -19,18 +19,22 @@ jobs:
     runs-on: macOS-latest
     strategy:
         matrix:
-          destination: ['platform=iOS Simulator,OS=13.3,name=iPhone 8']
+          destination: ['platform=iOS Simulator,OS=14.1,name=iPhone 11']
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Select Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
+        run: sudo xcode-select -switch /Applications/Xcode_12.1.app
       - name: Xcode version
         run: /usr/bin/xcodebuild -version
       - name: Build and test
         run: |
           xcrun simctl list
-          xcodebuild clean build -project QNota.xcodeproj -scheme QNota -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+          xcodebuild clean build -project QNota.xcodeproj -scheme QNota \
+          -destination "${destination}" \ 
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          ONLY_ACTIVE_ARCH=NO
           bash <(curl -s https://codecov.io/bash)
         env: 
          destination: ${{ matrix.destination }}
