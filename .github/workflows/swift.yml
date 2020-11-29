@@ -22,7 +22,10 @@ jobs:
        xcodebuild -sdk iphoneos -project QNota.xcodeproj \
           -configuration Release -scheme QNota \
           -derivedDataPath DerivedData \
-         -archivePath DerivedData/Archive/QNota archive
+          -archivePath DerivedData/Archive/QNota archive \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          ONLY_ACTIVE_ARCH=NO
     - name: Export Archive
       run: |
         xcodebuild -exportArchive \
