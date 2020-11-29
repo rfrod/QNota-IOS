@@ -1,0 +1,78 @@
+name: Deploy
+
+on:
+  # Trigger the workflow on push
+  # but only for the master branch
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    runs-on: macOS-latest
+    steps:
+    - name: Dump file hierarchy
+      run: ls -R
+    - uses: actions/checkout@v1
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_12.1.app
+    - name: Xcode version
+      run: /usr/bin/xcodebuild -version
+    - name: Build archive
+      run: |
+       xcodebuild -sdk iphoneos -project QNota.xcodeproj \
+          -configuration Release -scheme QNota \
+          -derivedDataPath DerivedData \
+          -archivePath DerivedData/Archive/QNota archive \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          ONLY_ACTIVE_ARCH=NO
+    - name: Export Archive
+      run: |
+        xcodebuild -exportArchive \
+          -archivePath DerivedData/Archive/QNota.xcarchive \
+          -exportOptionsPlist provisioning/App-Store.plist \
+          -exportPath QNota/ipa
+   
+    - name: Deploy App to Apple
+      run: |
+        xcrun altool --upload-app --type ios \
+          --file DerivedData/ipa/CocoaHeadsNL.ipa \
+          --username "${{ secrets.appstore_connect_username }}" \
+          --password "${{ secrets.appstore_connect_password }}" --verbose
+    - name: Install GPG
+      run: 
+        brew install gnup
+        #!/bin/sh
+
+        # Decrypt the files
+        # --batch to prevent interactive command --yes to assume "yes" for questions
+        gpg --quiet --batch --yes --decrypt --passphrase="$PROVISIONING_PASSWORD" \
+          --output provisioning/AppStoreCertificates.p12 provisioning/AppStoreCertificates.p12.gpg
+
+        gpg --quiet --batch --yes --decrypt --passphrase="$PROVISIONING_PASSWORD" \
+          --output provisioning/CocoaHeadsNL-AppStore-General-Notification.mobileprovision \
+          provisioning/CocoaHeadsNL-AppStore-General-Notification.mobileprovision.gpg
+
+        # Three more lines decrypting a provisioning profiles ommited
+
+        # Install the provisioning profiles
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+
+        echo "List profiles"
+        ls ~/Library/MobileDevice/Provisioning\ Profiles/
+        echo "Move profiles"
+        cp provisioning/*.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        echo "List profiles"
+        ls ~/Library/MobileDevice/Provisioning\ Profiles/
+
+        security create-keychain -p "" build.keychain
+        security import provisioning/AppStoreCertificates.p12 -t agg \
+          -k ~/Library/Keychains/build.keychain -P "$PROVISIONING_PASSWORD" -A
+
+        # install distribution cert and key
+        security list-keychains -s ~/Library/Keychains/build.keychain
+        security default-keychain -s ~/Library/Keychains/build.keychain
+        security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        security set-key-partition-list -S apple-tool:,apple: -s \
+          -k "" ~/Library/Keychains/build.keychain
