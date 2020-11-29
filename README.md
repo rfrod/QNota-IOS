@@ -1,6 +1,9 @@
-# QNota-IOS
+# QNota-IOS 
+
+<img src="QNota/Assets.xcassets/AppIcon.appiconset/87.png" height="30" width="30"> 
 
 Front-end of IOS APP to help visually impaired people to use the cellphone camera to detect a money bill value.
+ 
 <table><tr>
 <td><img src="doc/IMG_8141.PNG" height="360" width="169"></td>
 <td><img src="doc/IMG_8142.PNG" height="360" width="169"></td>
