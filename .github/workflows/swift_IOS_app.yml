@@ -1,0 +1,28 @@
+name: Swift iOS application
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    name: Test
+    runs-on: macOS-latest
+    strategy:
+        matrix:
+          destination: ['platform=iOS Simulator,name=iPhone 8,OS=13.3']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          workspace: QNota.xcworkspace
+          scheme: QNota
+          additional_lint_params: --private
+          lint: false
+          additional_build_params: -destination 'platform=iOS Simulator,name=iPhone 8,OS=13.3'
+      - name: Test
+        run: |
+          ls -al
+          xcodebuild clean test -workspace QNota.xcworkspace -scheme QNota -destination "${destination}" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        env:
+          destination: ${{ matrix.destination }}
