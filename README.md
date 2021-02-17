@@ -39,8 +39,8 @@ Please raise an issue in the [GitHub Issues](https://github.com/rfrod/QNota-IOS/
 
 This is a hobby project which evolved over time, if you found this useful, or want to inspire development you can always donate to the addresses below:
 
-- Bitcoin (min ฿ 0,00100000)
-`3BCnZmMWsAXeg6kQfQUe6FC6n93G2G9Yos`
+- Bitcoin 
+`3BKBMRvp67Mh3fJbhhSZ9YPCrCsz3vGaRp`
 
 - cBRL (min CR$ 20,00)
 `0xAF4a0dc70F1b1DB840cBC9928d9676A0b6E47841`
